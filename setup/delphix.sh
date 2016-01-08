@@ -26,4 +26,6 @@ chmod 0770 /opt/toolkit
 
 # add the delphix user to various groups
 usermod -a -G wheel delphix
+usermod -a -G wheel postgres
 usermod -a -G postgres delphix
+usermod -a -G delphix postgres
