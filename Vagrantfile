@@ -56,6 +56,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # install ruby and upload the delphix gem
   config.vm.provision "shell", path: "setup/ruby.sh"
   config.vm.provision "file", source: "pkg/delphix-#{DELPHIX_GEM_VERSION}.gem", destination: "#{SETUP_HOME}/delphix.gem"
+  # RAILS pre-requisites
+  config.vm.provision "shell", path: "setup/rails_prereqisites.sh"
   
   # add the IP of the Delphix Engine etc. to each machine's /etc/hosts
   config.vm.provision "shell", inline: "sudo echo '#{DELPHIX_ENGINE_IP} de.delphix.local' >> /etc/hosts"
@@ -63,8 +65,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", inline: "sudo echo '#{IP_BASE}.210 target.delphix.local' >> /etc/hosts"
   
   # db ports
-  config.vm.provision "shell", inline: "echo 'export DB_PORT_PGS=5432' >> #{SETUP_HOME}/.bash_profile"
-  config.vm.provision "shell", inline: "echo 'export DB_PORT_MYSQL=3306' >> #{SETUP_HOME}/.bash_profile"
+  config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_PGS=5432' >> /etc/profile"
+  config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_MYSQL=3306' >> /etc/profile"
+  
+  # add some files to the environments
+  config.vm.provision "file", source: "scripts/ffcrm_prod.sh", destination: "#{SETUP_HOME}/ffcrm_up.sh"
+  config.vm.provision "file", source: "conf/database.yml", destination: "#{SETUP_HOME}/database.yml"
   
   # define the source instance
   config.vm.define "source" do |node|
@@ -76,7 +82,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network "public_network", ip: public_ipv4, bridge: VMWARE_NETWORK_ADAPTER
         
     # add the IP of the db servers
-    config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> #{SETUP_HOME}/.bash_profile"
+    config.vm.provision "shell", inline: "sudo echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
     
   end
   
@@ -90,7 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network "public_network", ip: public_ipv4, bridge: VMWARE_NETWORK_ADAPTER
         
     # add the IP of the db servers
-    config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> #{SETUP_HOME}/.bash_profile"
+    config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
     
   end
   

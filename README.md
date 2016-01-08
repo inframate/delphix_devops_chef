@@ -25,12 +25,7 @@ On a Mac OS, the correct Network Adapter configuration of the Delphix Engine VMw
 Startup and configure the Delphix Engine (DE) as usual. Once the the DE is running, write down the IP address of the DE, e.g. `172.16.138.153`. In addition to the IP address we have to know which network adapter is used by VMware to run the Delphix engine. This information can be found in the VMware's log file, `vmware.log`. Look for a section like this:
 
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=127.0.0.1 (lo0)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=fe80::1 (lo0)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=fe80::a65e:60ff:feea:9813 (en0)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=192.168.178.22 (en0)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=fe80::3c0b:88ff:febc:6ec0 (awdl0)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=192.168.211.1 (vmnet1)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=192.168.0.1 (vmnet2)
+	...
 	
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=172.16.138.1 (vmnet8)
  
