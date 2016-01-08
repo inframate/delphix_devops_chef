@@ -31,7 +31,7 @@ Startup and configure the Delphix Engine (DE) as usual. Once the the DE is runni
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=fe80::3c0b:88ff:febc:6ec0 (awdl0)
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=192.168.211.1 (vmnet1)
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=192.168.0.1 (vmnet2)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=172.16.138.1 (vmnet8)
+	2015-11-13T07:33:31.700+01:00| vmx| I120: **IP=172.16.138.1 (vmnet8)**
  
 Find the line that matches the DE's subnet. In this example the network adapter would be `vmnet8`.
 
@@ -57,72 +57,6 @@ Start vagrant from the same console or export these ENV variables in each consol
 
 The DevOps demo currently uses three virtual machines:
 
-* `staging`: used to host the PostgeSQL staging database
-* `prod`: the **production** environment, with a full app stack (ruby, RAILS, & PostgreSQL)
-* `dev`: the **development** environment, with a full app stack (ruby, RAILS, & PostgreSQL)
+* `source`: used to host the PostgeSQL staging database
+* `target`: the **production** environment, with a full app stack (ruby, RAILS, & PostgreSQL)
 
-The virtual machines must be started in the above sequence!
-
-##### 1. Provision the Staging Environment
-
-Start the Staging VM:
-
-	vagrant up staging
-
-##### 2. Enable PostgreSQL staging
-
-Once vagrant is done, log into the Delphix Web UI and enable `Use as Staging` for the PostgreSQL database.
-
-##### 3. Provision the Production Environment
-
-Start the Production VM:
-
-	vagrant up prod
-
-##### 4. Deploy the RAILS app on the Production Environment
-
-Once vagrant is done, log into the prod VM and deploy the RAILS app:
-
-	vagrant ssh prod
-	
-	./ffcrm_up.sh
-
-This will pull the app's latest code from github and deploy all ruby dependencies. Once this is done, the script creates the app's database schema and loads demo data into it. Assuming that the subnetwork is `172.16.138.1`, the RAILS app can be accessed using this URL:
-
-	http://172.16.138.101:3000
-
-A valid username and password is `aaron`.
-
-##### 5. Create a dSource 'CRM_PROD'
-
-Now create the demo's dSource. The name of the dSource has to be 'CRM_PROD' in group 'PRODUCTION'.
-
-##### 6. Provision the Development Environment
-
-Start the Development VM:
-
-	vagrant up dev
-
-##### 7. Deploy the RAILS app on the Development Environment
-
-Once vagrant is done, log into the dev VM and deploy the RAILS app:
-
-	vagrant ssh dev
-	
-	./ffcrm_up.sh
-
-Agsin, this will pull the app's latest code from github and deploy all ruby dependencies. But instead of creating a new, empty database, the dev environment uses a virtual database, provisioned from the production environment !
-
-The dev app can be accessed like this:
-
-	http://172.16.138.102:3000
-
-Same username & password as on the production environment !
-
-## Demo Scenarios
-
-Explain how to demo this ...
-
-## To-do
-
-* Remove all manuall steps in the above setup: Step 2,4,5,7
