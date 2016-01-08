@@ -70,7 +70,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # add some files to the environments
   config.vm.provision "file", source: "scripts/ffcrm_prod.sh", destination: "#{SETUP_HOME}/ffcrm_up.sh"
-  config.vm.provision "file", source: "conf/database.yml", destination: "#{SETUP_HOME}/database.yml"
+  config.vm.provision "file", source: "conf/database_postgres.yml", destination: "#{SETUP_HOME}/database_postgres.yml"
+  config.vm.provision "file", source: "conf/database_mysql.yml", destination: "#{SETUP_HOME}/database_mysql.yml"
   
   # define the source instance
   config.vm.define "source" do |node|
