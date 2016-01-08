@@ -66,7 +66,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # db ports
   config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_PGS=5432' >> /etc/profile"
-  config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_MYSQL=3306' >> /etc/profile"
+  config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_MYSQL=5506' >> /etc/profile"
   
   # add some files to the environments
   config.vm.provision "file", source: "scripts/ffcrm_prod.sh", destination: "#{SETUP_HOME}/ffcrm_prod.sh"
