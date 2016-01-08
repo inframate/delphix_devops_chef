@@ -1,0 +1,17 @@
+---
+default: &default
+  adapter: postgresql
+  schema_search_path: public
+  min_messages: warning
+  username: delphix
+  password: delphix
+  host: <%= ENV["DB_HOST"] %>
+  port: <%= ENV["DB_PORT"] %>
+  
+development:
+  <<: *default
+  database: ffcrm
+
+production:
+  <<: *default
+  database: ffcrm

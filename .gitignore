@@ -1,0 +1,9 @@
+.rvmrc
+.vagrant/
+*.zip
+*.gz
+*.tar
+*.tar
+.bash_*
+.ssh
+.DS_Store
