@@ -8,7 +8,7 @@ wget http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
 sudo yum -y localinstall mysql-community-release-el6-5.noarch.rpm 
 
 # install the server
-sudo yum -y install mysql-community-server
+sudo yum -y install mysql-community-server mysql-devel
 
 # add the delphix user to the mysql group
 sudo usermod -a -G mysql delphix
@@ -34,6 +34,7 @@ sudo echo "socket=/var/lib/mysql/mysql.sock" >> /etc/my.cnf
 sudo echo "log-bin=mysql-bin" >> /etc/my.cnf
 sudo echo "symbolic-links=0" >> /etc/my.cnf
 sudo echo "sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES" >> /etc/my.cnf
+sudo echo "server-id=1" >> /etc/my.cnf
 sudo echo "" >> /etc/my.cnf
 sudo echo "[mysqld_safe]" >> /etc/my.cnf
 sudo echo "log-error=/var/log/mysqld.log" >> /etc/my.cnf
