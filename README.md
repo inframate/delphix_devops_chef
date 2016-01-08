@@ -31,7 +31,8 @@ Startup and configure the Delphix Engine (DE) as usual. Once the the DE is runni
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=fe80::3c0b:88ff:febc:6ec0 (awdl0)
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=192.168.211.1 (vmnet1)
 	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=192.168.0.1 (vmnet2)
-	2015-11-13T07:33:31.700+01:00| vmx| I120: **IP=172.16.138.1 (vmnet8)**
+	
+	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=172.16.138.1 (vmnet8)
  
 Find the line that matches the DE's subnet. In this example the network adapter would be `vmnet8`.
 
