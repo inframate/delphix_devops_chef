@@ -12,11 +12,20 @@ sudo yum -y install mysql-community-server mysql-devel
 
 # add a DB user 'delphix' with all grants and remote access permissions
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'%' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'localhost' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
 
 # create an admin user for replication etc
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix_admin'@'localhost' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
 mysql -uroot -e "GRANT REPLICATION SLAVE ON *.* TO 'delphix_admin'@'localhost';"
 mysql -uroot -e "GRANT SELECT, RELOAD, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON *.* TO 'delphix_admin'@'localhost';"
+
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix_admin'@'de.delphix.local' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
+mysql -uroot -e "GRANT REPLICATION SLAVE ON *.* TO 'delphix_admin'@'de.delphix.local';"
+mysql -uroot -e "GRANT SELECT, RELOAD, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON *.* TO 'delphix_admin'@'de.delphix.local';"
+
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix_admin'@'target.delphix.local' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
+mysql -uroot -e "GRANT REPLICATION SLAVE ON *.* TO 'delphix_admin'@'target.delphix.local';"
+mysql -uroot -e "GRANT SELECT, RELOAD, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON *.* TO 'delphix_admin'@'target.delphix.local';"
 
 # write our own /etc/my.cnf
 sudo rm /etc/my.cnf
