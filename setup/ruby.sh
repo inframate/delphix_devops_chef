@@ -9,8 +9,8 @@ curl -sSL https://get.rvm.io | bash -s stable
 source /etc/profile.d/rvm.sh
 
 rvm requirements
-rvm install 2.2.3
-rvm use 2.2.3 --default
+rvm install 2.2.4
+rvm use 2.2.4 --default
 
 # THIS IS VERY BAD, BUT I WANT TO AVOID ACCESS RIGHTS CONFLICTS ... !
 chmod -R 777 /usr/local/rvm
