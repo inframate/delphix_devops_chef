@@ -26,6 +26,6 @@ bundle exec rake db:migrate
 bundle exec rake assets:precompile
 
 # provision test data and launch RAILS
-rake ffcrm:demo:load
-#rake ffcrm:setup:admin USERNAME=delphix PASSWORD=delphix EMAIL=admin@delphix.local
+#rake ffcrm:demo:load
+rake ffcrm:setup:admin USERNAME=delphix PASSWORD=delphix EMAIL=admin@delphix.local
 #rails s -b 0.0.0.0

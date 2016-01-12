@@ -66,11 +66,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # db ports
   config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_PGS=5432' >> /etc/profile"
-  config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_MYSQL=5506' >> /etc/profile"
   
   # add some files to the environments
-  config.vm.provision "file", source: "scripts/ffcrm_prod.sh", destination: "#{SETUP_HOME}/ffcrm_prod.sh"
-  config.vm.provision "file", source: "scripts/ffcrm_dev.sh", destination: "#{SETUP_HOME}/ffcrm_dev.sh"
+  config.vm.provision "file", source: "scripts/ffcrm_up_prod.sh", destination: "#{SETUP_HOME}/ffcrm_up_prod.sh"
+  config.vm.provision "file", source: "scripts/ffcrm_up_dev.sh", destination: "#{SETUP_HOME}/ffcrm_up_dev.sh"
+  config.vm.provision "file", source: "scripts/ffcrm_setup_mysql.sh", destination: "#{SETUP_HOME}/ffcrm_setup_mysql.sh"
+  config.vm.provision "file", source: "scripts/ffcrm_setup_dev_mysql.sh", destination: "#{SETUP_HOME}/ffcrm_setup_dev_mysql.sh"
+  config.vm.provision "file", source: "scripts/ffcrm_setup_postgres.sh", destination: "#{SETUP_HOME}/ffcrm_setup_postgres.sh"
+  config.vm.provision "file", source: "scripts/ffcrm_setup_dev_postgres.sh", destination: "#{SETUP_HOME}/ffcrm_setup_dev_postgres.sh"
   config.vm.provision "file", source: "conf/database_postgres.yml", destination: "#{SETUP_HOME}/database_postgres.yml"
   config.vm.provision "file", source: "conf/database_mysql.yml", destination: "#{SETUP_HOME}/database_mysql.yml"
   
@@ -85,7 +88,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         
     # add the IP of the db servers
     config.vm.provision "shell", inline: "sudo echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
-    
+    config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_MYSQL=3306' >> /etc/profile"
   end
   
   # define the target instance
@@ -99,7 +102,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         
     # add the IP of the db servers
     config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
-    
+    config.vm.provision "shell", inline: "sudo echo 'export DB_PORT_MYSQL=5506' >> /etc/profile"
   end
   
 end

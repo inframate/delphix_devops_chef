@@ -10,20 +10,13 @@ sudo yum -y localinstall mysql-community-release-el6-5.noarch.rpm
 # install the server
 sudo yum -y install mysql-community-server mysql-devel
 
-# add the delphix user to the mysql group
-sudo usermod -a -G mysql delphix
-sudo usermod -a -G delphix mysql
-
 # add a DB user 'delphix' with all grants and remote access permissions
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'%' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
-mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'localhost' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
 
-# allow replication (should be part of the above, but ...)
-mysql -uroot -e "GRANT REPLICATION SLAVE ON *.* TO 'delphix'@'%';"
-mysql -uroot -e "GRANT REPLICATION SLAVE ON *.* TO 'delphix'@'localhost';"
-
-mysql -uroot -e "GRANT SELECT, RELOAD, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON *.* TO 'delphix'@'%';"
-mysql -uroot -e "GRANT SELECT, RELOAD, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON *.* TO 'delphix'@'localhost';"
+# create an admin user for replication etc
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix_admin'@'localhost' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
+mysql -uroot -e "GRANT REPLICATION SLAVE ON *.* TO 'delphix_admin'@'localhost';"
+mysql -uroot -e "GRANT SELECT, RELOAD, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON *.* TO 'delphix_admin'@'localhost';"
 
 # write our own /etc/my.cnf
 sudo rm /etc/my.cnf

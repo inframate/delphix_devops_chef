@@ -16,16 +16,18 @@ echo "delphix ALL=NOPASSWD:/bin/mount, /bin/umount, /bin/mkdir, /bin/rmdir, /bin
 " >> /etc/sudoers.d/delphix
 
 # add the toolkit location
-mkdir -p /opt/toolkit_1
-chown postgres:postgres /opt/toolkit_1
-chmod 0770 /opt/toolkitp
-
 mkdir -p /opt/toolkit
 chown delphix:delphix /opt/toolkit
 chmod 0770 /opt/toolkit
 
 # add the delphix user to various groups
-usermod -a -G wheel delphix
-usermod -a -G wheel postgres
-usermod -a -G postgres delphix
-usermod -a -G delphix postgres
+sudo usermod -a -G wheel delphix
+sudo usermod -a -G wheel postgres
+sudo usermod -a -G wheel mysql
+
+# add the postgres user to groups
+sudo usermod -a -G postgres delphix
+sudo usermod -a -G delphix postgres
+# add the mysql user to groups
+sudo usermod -a -G mysql delphix
+sudo usermod -a -G delphix mysql
