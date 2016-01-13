@@ -52,3 +52,6 @@ mysql -hdb.delphix.local -uroot -e "GRANT SELECT, RELOAD, REPLICATION CLIENT, SH
 
 # see http://www.cyberciti.biz/tips/how-do-i-enable-remote-access-to-mysql-database-server.html
 # SELECT * from information_schema.user_privileges;
+
+# set the (db-)root password
+#mysqladmin -u root password delphix
