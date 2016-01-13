@@ -95,9 +95,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
     # install the app
     config.vm.provision "shell", path: "setup/install_crm_mysql.sh"
+    config.vm.provision "shell", path: "setup/install_crm_postgres.sh"
     config.vm.provision "shell", path: "setup/setup_crm_mysql.sh"
+    config.vm.provision "shell", path: "setup/setup_crm_postgres.sh"
     config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
+    config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_postgres" # fix permissions
   end
   
   #
@@ -124,7 +127,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
     # install the app
     config.vm.provision "shell", path: "setup/install_crm_mysql.sh"
+    config.vm.provision "shell", path: "setup/install_crm_postgres.sh"
     config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
+    config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
+    config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_postgres" # fix permissions
   end
   
 end
