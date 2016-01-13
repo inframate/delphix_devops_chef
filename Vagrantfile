@@ -10,9 +10,6 @@ VAGRANTFILE_API_VERSION = "2"
 VB_MEMORY=1024
 VB_CPUS=1
 
-# version of the delphix gem
-DELPHIX_GEM_VERSION='0.5.0'
-
 # generic setup
 DOMAIN_NAME="delphix.local"
 SETUP_HOME='/home/delphix'
@@ -99,6 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # install the app
     config.vm.provision "shell", path: "setup/install_crm_mysql.sh"
     config.vm.provision "shell", path: "setup/setup_crm_mysql.sh"
+    config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
   end
   
@@ -126,7 +124,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
     # install the app
     config.vm.provision "shell", path: "setup/install_crm_mysql.sh"
-     
+    config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
   end
   
 end
