@@ -38,6 +38,8 @@ sudo echo "symbolic-links=0" >> /etc/my.cnf
 sudo echo "sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES" >> /etc/my.cnf
 sudo echo "server-id=1" >> /etc/my.cnf
 sudo echo "" >> /etc/my.cnf
+
+sudo echo "" >> /etc/my.cnf
 sudo echo "[mysqld_safe]" >> /etc/my.cnf
 sudo echo "log-error=/var/log/mysqld.log" >> /etc/my.cnf
 sudo echo "pid-file=/var/run/mysqld/mysqld.pid" >> /etc/my.cnf
