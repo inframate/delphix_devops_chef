@@ -6,7 +6,7 @@ default: &default
   username: delphix_u
   password: delphix
   host: <%= ENV["DB_HOST"] %>
-  port: <%= ENV["DB_PORT_PGS"] %>
+  port: <%= ENV["PGS_DB_PORT"] %>
   
 development:
   <<: *default

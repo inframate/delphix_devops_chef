@@ -6,8 +6,8 @@ default: &default
   username: delphix
   pool: 5
   password: delphix
-  host: localhost
-  port: <%= ENV["DB_PORT_MYSQL"] %>
+  host: <%= ENV["DB_HOST"] %>
+  port: <%= ENV["MYSQL_DB_PORT"] %>
   
 development:
   <<: *default
