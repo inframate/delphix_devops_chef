@@ -71,6 +71,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", path: "setup/install_openjdk.sh"
   config.vm.provision "shell", path: "setup/install_ruby.sh"
   
+  # finalize the delphix user setup
+  config.vm.provision "shell", path: "setup/setup_delphix.sh"
+  
   #
   # define the source instance
   #

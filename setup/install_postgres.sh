@@ -10,3 +10,5 @@ sudo service postgresql-9.2 initdb
 # start and enable the server
 sudo service postgresql-9.2 start
 sudo chkconfig postgresql-9.2 on
+
+sudo usermod -a -G wheel postgres
