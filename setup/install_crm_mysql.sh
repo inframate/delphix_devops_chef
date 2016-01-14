@@ -20,7 +20,7 @@ su - delphix
 cd $SETUP_HOME/app_mysql
 
 # install bundler first
-sudo gem install bundler
+sudo /usr/local/bin/gem install bundler
 
 # make sure bundler is installed and all gems are available
 bundle install --path $HOME/.gem/ruby/2.2.0
