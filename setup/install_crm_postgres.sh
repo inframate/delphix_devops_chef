@@ -8,7 +8,7 @@ cd $SETUP_HOME
 
 if [ ! -d "$APP_HOME" ];then
 	git clone $REPO --branch $BRANCH app_postgres
-	cp app_postgres/config/database.de.postgres.yml app_mysql/config/database.yml
+	cp app_postgres/config/database.de.postgres.yml app_postgres/config/database.yml
 else
 	cd $APP_HOME
 	git pull origin $BRANCH

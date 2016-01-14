@@ -10,6 +10,8 @@ sudo echo '# db = mysql | postgres' >> $SETUP_HOME/up_crm.sh
 sudo echo '' >> $SETUP_HOME/up_crm.sh
 sudo echo 'export RAILS_ENV=$1' >> $SETUP_HOME/up_crm.sh
 sudo echo 'cd $SETUP_HOME/app_$2' >> $SETUP_HOME/up_crm.sh
+sudo echo 'sudo /usr/local/bin/gem install bundler' >> $SETUP_HOME/up_crm.sh
+sudo echo 'bundle install --path $HOME/.gem/ruby/2.2.0' >> $SETUP_HOME/up_crm.sh
 sudo echo 'bundle exec rails s -b 0.0.0.0' >> $SETUP_HOME/up_crm.sh
 
 sudo chown delphix:delphix $SETUP_HOME/up_crm.sh
