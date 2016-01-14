@@ -4,6 +4,7 @@
 export SETUP_HOME=/home/delphix
 export TOOLKIT_HOME=$SETUP_HOME/toolkit
 
+sudo echo "# DELPHIX #" >> /etc/profile
 sudo echo "export SETUP_HOME=/home/delphix" >> /etc/profile
 sudo echo "export TOOLKIT_HOME=$SETUP_HOME/toolkit" >> /etc/profile
 

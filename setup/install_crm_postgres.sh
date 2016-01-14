@@ -19,5 +19,8 @@ chown -R delphix:delphix $APP_HOME
 su - delphix
 cd $SETUP_HOME/app_postgres
 
+# install bundler first
+sudo gem install bundler
+
 # make sure bundler is installed and all gems are available
-bundle install
+bundle install --path $HOME/.gem/ruby/2.2.0
