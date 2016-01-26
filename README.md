@@ -75,7 +75,39 @@ Open a console and export the above environment variables:
 	export DELPHIX_ENGINE_IP=172.16.138.157
 	export VMWARE_NETWORK_ADAPTER=vmnet8
 
+**IMPORTANT**
 Start vagrant from the same console or export these ENV variables in each console you use to start/run the demo !
 
-## Reference
+#### Create the Demo VMs
+
+The first time the demo is used, both environments (source, target) must be created. This can be done with one command
+
+	vagrant up
+
+or individually for each environment
+
+	vagrant up source
+	vagrant up target
+
+Depending on the type and quality of internet connection, this can take some time ... 
+
+## Demo
+
+Once both environments have been created, some final manual steps are necessary to complete the setup.
+
+#### User Credentials
+
+In order to access the demo VMs, the following vagrant command can be used:
+
+	vagrant ssh source
+or
+	vagrant ssh target
+
+The following OS users are available:
+
+* delphix / delphix
+* vagrant / vagrant (sudoer)
+* root / vagrant
+
+#### Create a dSource
 
