@@ -1,4 +1,4 @@
-# Delphix Vagrant
+# Delphix DevOps - Vagrant
 
 This project shows how to build a simple Delphix demo environment using Vagrant from scratch.
 
@@ -45,6 +45,37 @@ The demo uses a custom Vagrant plugin to interact with the Delphix Engine. This 
 Verify that the plugin has been installed:
 
 	vagrant plugin list
+
+## Provisioning
+
+#### Preparation
+
+The Vagrantfile requires the following configuration parameters:
+
+* DELPHIX_ENGINE_IP
+* VMWARE_NETWORK_ADAPTER
+
+The IP address is shown at the bottom of the Delphix Engine's console window. The network adapter however requires some digging in the VMware's log file :-)
+
+Startup the Delphix Engine (DE) as usual. Once the the DE is running, write down the IP address of the DE, e.g. `172.16.138.157`. The VMware's current network adapter configuration is hidden in the VMware's log file, `vmware.log`. 
+
+Look for a section like this:
+
+	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=127.0.0.1 (lo0)
+	...
+	...
+	2015-11-13T07:33:31.700+01:00| vmx| I120: IP=172.16.138.1 (vmnet8)
+ 
+Find the line that matches the DE's subnet (172.16.138.x). In this example the network adapter would be `vmnet8`.
+
+#### Export Network Configuration Parameters
+
+Open a console and export the above environment variables:
+
+	export DELPHIX_ENGINE_IP=172.16.138.157
+	export VMWARE_NETWORK_ADAPTER=vmnet8
+
+Start vagrant from the same console or export these ENV variables in each console you use to start/run the demo !
 
 ## Reference
 
