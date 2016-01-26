@@ -129,15 +129,16 @@ Start the CRM demo on the source environment
 	su - delphix
 	./up_crm.sh production mysql
 
-Once the RAILS app is running, access it on 
-
-`http://<source env ip>:3000`
-
-User name: delphix
-Password: delphix
-
 Start the CRM demo on the target environment
 
 	vagrant ssh target
 	su - delphix
 	./up_crm.sh development mysql
+
+Once the RAILS app is running, access it on 
+
+`http://<source_env_ip>:3000`
+`http://<target_env_ip>:3000`
+
+User name: delphix
+Password: delphix
