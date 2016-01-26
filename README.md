@@ -100,7 +100,9 @@ Once both environments have been created, some final manual steps are necessary 
 In order to access the demo VMs, the following vagrant command can be used:
 
 	vagrant ssh source
+
 or
+
 	vagrant ssh target
 
 The following OS users are available:
@@ -111,3 +113,31 @@ The following OS users are available:
 
 #### Create a dSource
 
+Log into the Delphix Engine web UI and verify that two environments `source` and `target` were created. Enable both databases on the target environment to be used `staging` databases.
+
+Create a new dSource `CRM_SOURCE` from the MySQL database on the `source` environment. Use the `target` environment as staging environment with port `4406`.
+
+#### Create a VDB
+
+Create a new VDB from the `CRM_SOURCE` dSource. Use port `5506` for this VDB.
+
+#### Start the CRM app
+
+Start the CRM demo on the source environment
+
+	vagrant ssh source
+	su - delphix
+	./up_crm.sh production mysql
+
+Once the RAILS app is running, access it on 
+
+`http://<source env ip>:3000`
+
+User name: delphix
+Password: delphix
+
+Start the CRM demo on the target environment
+
+	vagrant ssh target
+	su - delphix
+	./up_crm.sh development mysql
