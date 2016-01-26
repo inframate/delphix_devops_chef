@@ -23,21 +23,28 @@ In addition to the above tools, a running Delphix Engine is required:
 
 Download and configure the Delphix Engine as usual. Documentation on how to setup Delphix [can be found here](https://docs.delphix.com).
 
-### Network Configuration
+#### Network Configuration
 
-The Delphix Engine is delivered / deployed as a VMware virtual appliance while the demo uses VirtualBox as hypervisor. It is important that all virtual machines share the same network on the host system i.e. that they are all 
+The Delphix Engine is delivered and deployed as a VMware virtual appliance while the demo uses VirtualBox as hypervisor. It is important that all virtual machines share the same network on the host system i.e. that they are all 
 
 * on the same subnet, and
 * they share the same network interface.
 
 On MacOS, the correct Network Adapter configuration for the Delphix Engine VMware image is **'Share with my Mac'**.
 
-### User Credentials
+#### User Credentials
 
 The demo assumes that there is a Delphix admin user `delphix_admin` with password `delphix`. Create this user if necessary.
 
-## Preparing the Vagrantfile
+## Preparing Vagrant
 
+The demo uses a custom Vagrant plugin to interact with the Delphix Engine. This plugin must be installed first:
+
+	vagrant plugin install vagrant-delphix
+
+Verify that the plugin has been installed:
+
+	vagrant plugin list
 
 ## Reference
 
