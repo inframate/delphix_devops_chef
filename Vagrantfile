@@ -41,11 +41,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false
   end
-  
+    
   # rebuild the /etc/hosts file ...
   config.vm.provision "shell", inline: "sudo rm /etc/hosts"
-  config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost' >> /etc/hosts"
-  config.vm.provision "shell", inline: "sudo echo '::1 localhost' >> /etc/hosts"
+  #config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost' >> /etc/hosts"
+  #config.vm.provision "shell", inline: "sudo echo '::1 localhost' >> /etc/hosts"
   
   # add the IP of the Delphix Engine etc. to each machine's /etc/hosts
   config.vm.provision "shell", inline: "sudo echo '#{DELPHIX_ENGINE_IP} de.delphix.local' >> /etc/hosts"
@@ -71,6 +71,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # finalize the delphix user setup
   config.vm.provision "shell", path: "setup/setup_delphix.sh"
   
+  #config the delphix provisioner
+  config.delphix.enabled = true
+  config.delphix.engine_url = "http://#{DELPHIX_ENGINE_IP}"
+  config.delphix.engine_user = 'delphix_admin'
+  config.delphix.engine_password = 'delphix'
+  
   #
   # define the source instance
   #
@@ -86,7 +92,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
     config.vm.provision "shell", inline: "echo 'export MYSQL_DB_PORT=3306' >> /etc/profile"
     config.vm.provision "shell", inline: "echo 'export PGS_DB_PORT=5432' >> /etc/profile"
-    config.vm.provision "shell", inline: "sudo echo '127.0.0.1 #{node_name}' >> /etc/hosts"
+    
+    config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost #{node_name}' >> /etc/hosts"
     config.vm.provision "shell", inline: "sudo echo '#{public_ipv4} db.delphix.local' >> /etc/hosts"
     
     # configure MySQL & Postgres
@@ -101,6 +108,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_postgres" # fix permissions
+    
+    # configure the environment
+    node.delphix.env_name = node_name
+    node.delphix.env_ip = public_ipv4
+    node.delphix.user = 'delphix'
+    node.delphix.password = 'delphix'
+    node.delphix.toolkit_path = '/home/delphix/toolkit'
+    
+    # register the environment in Delphix
+    node.vm.provision :delphix, run: "always"
+    
   end
   
   #
@@ -116,9 +134,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
     # add the IP of the db server ...
     config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
-    config.vm.provision "shell", inline: "echo 'export MYSQL_DB_PORT=3306' >> /etc/profile"
-    config.vm.provision "shell", inline: "echo 'export PGS_DB_PORT=5432' >> /etc/profile"
-    config.vm.provision "shell", inline: "sudo echo '127.0.0.1 #{node_name}' >> /etc/hosts"
+    config.vm.provision "shell", inline: "echo 'export MYSQL_DB_PORT=5506' >> /etc/profile"
+    config.vm.provision "shell", inline: "echo 'export PGS_DB_PORT=7654' >> /etc/profile"
+    config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost #{node_name}' >> /etc/hosts"
     config.vm.provision "shell", inline: "sudo echo '#{public_ipv4} db.delphix.local' >> /etc/hosts"
     
     # configure MySQL & Postgres
@@ -131,6 +149,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_postgres" # fix permissions
+    
+    # configure the environment
+    node.delphix.env_name = node_name
+    node.delphix.env_ip = public_ipv4
+    node.delphix.user = 'delphix'
+    node.delphix.password = 'delphix'
+    node.delphix.toolkit_path = '/home/delphix/toolkit'
+    
+    # register the environment in Delphix
+    node.vm.provision :delphix, run: "always"
   end
   
 end

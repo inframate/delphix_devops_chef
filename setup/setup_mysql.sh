@@ -11,7 +11,7 @@ sudo echo "log-bin=mysql-bin" >> /etc/my.cnf
 sudo echo "symbolic-links=0" >> /etc/my.cnf
 sudo echo "sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES" >> /etc/my.cnf
 sudo echo "server-id=1" >> /etc/my.cnf
-sudo echo "bind-address=$DB_HOST" >> /etc/my.cnf
+sudo echo "bind-address=0.0.0.0" >> /etc/my.cnf
 
 sudo echo "" >> /etc/my.cnf
 sudo echo "[mysqld_safe]" >> /etc/my.cnf
@@ -23,7 +23,6 @@ sudo chkconfig mysqld on
 sudo service mysqld restart
 
 # add a DB user 'delphix' with all grants and remote access permissions
-#mysql -hdb.delphix.local -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'%' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
 mysql -hdb.delphix.local -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'localhost' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
 mysql -hdb.delphix.local -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'db.delphix.local' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
 mysql -hdb.delphix.local -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'delphix'@'source.delphix.local' IDENTIFIED BY 'delphix' WITH GRANT OPTION;"
