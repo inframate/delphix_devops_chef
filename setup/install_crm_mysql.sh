@@ -16,6 +16,7 @@ fi
 
 chown -R delphix:delphix $APP_HOME
 
+# switch to the delphix user
 su - delphix
 cd $SETUP_HOME/app_mysql
 
