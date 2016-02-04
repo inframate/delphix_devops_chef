@@ -22,7 +22,16 @@ action :install do
   # authenticate the connection
   Delphix.authenticate!(new_resource.username, new_resource.password)
 
-  # provision a new VDB
-  vdb = Delphix::VDB.create new_resource.name, source_name, group_name, target_env, mount_base, port_number
+  # lookup the group reference
+  group = Delphix::Group.list.lookup_by_name group_name
+
+  # lookup the dSource reference
+  dsource = Delphix::Database.list.lookup_by_name source_name
+
+  # lookup the repository reference, i.e. the DB installation on the target Environment
+  repository = Delphix::Repository.list.lookup_by_ref target_env
+
+  # provision a new VDB now that we have the basic details
+  Delphix::VDB.create new_resource.name, dsource.reference, group.reference, repository.reference, mount_base, port_number
 
 end
