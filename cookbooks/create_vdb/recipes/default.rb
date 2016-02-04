@@ -11,7 +11,7 @@ delphix_vdb "CRM_DEV" do
   engine_url "http://de.delphix.local"
 
   source_db 'CRM_SOURCE'
-  target_env 'MYSQL_INSTALL-2' #'target'
+  target_env 'target'
   group_name 'DEV'
   mount_base '/home/delphix/toolkit/V/mysql'
   port_number 5506

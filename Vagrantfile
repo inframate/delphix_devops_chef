@@ -170,7 +170,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # add Chef and create a new VDB
     node.vm.provision "chef_solo" do |chef|
       chef.cookbooks_path = "cookbooks"
-      chef.log_level = :debug
+      #chef.log_level = :debug
 
       chef.add_recipe "create_vdb"
     end

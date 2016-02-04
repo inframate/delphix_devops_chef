@@ -29,7 +29,11 @@ action :install do
   dsource = Delphix::Database.list.lookup_by_name source_name
 
   # lookup the repository reference, i.e. the DB installation on the target Environment
-  repository = Delphix::Repository.list.lookup_by_ref target_env
+  # discover all repositories
+  repos = Delphix::Repository.list
+  repos_on_target = repos.filter_by 'environment', target_env
+  repos = repos_on_target.filter_by 'type', 'MySQLInstall'
+  repository = repos.first # there could be more than one though !
 
   # provision a new VDB now that we have the basic details
   Delphix::VDB.create new_resource.name, dsource.reference, group.reference, repository.reference, mount_base, port_number
