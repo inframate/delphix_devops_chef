@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost #{node_name}' >> /etc/hosts"
     config.vm.provision "shell", inline: "sudo echo '#{public_ipv4} db.delphix.local' >> /etc/hosts"
 
-    # configure MySQL & Postgres
+    # configure MySQL
     config.vm.provision "shell", path: "setup/setup_mysql.sh"
 
     # install the app
@@ -119,14 +119,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost #{node_name}' >> /etc/hosts"
     config.vm.provision "shell", inline: "sudo echo '#{public_ipv4} db.delphix.local' >> /etc/hosts"
 
-    # configure MySQL & Postgres
+    # configure MySQL
     config.vm.provision "shell", path: "setup/setup_mysql.sh"
 
     # install the app
     config.vm.provision "shell", path: "setup/install_crm_mysql.sh"
     config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
-    
+
     # configure the environment
     node.delphix.env_name = node_name
     node.delphix.env_ip = public_ipv4
