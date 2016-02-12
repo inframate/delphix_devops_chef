@@ -22,7 +22,7 @@ IP_BASE = DELPHIX_ENGINE_IP.split('.')[0..2].join('.')
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant environment requires a box to build off of.
-  config.vm.box = "bento/centos-6.7"
+  config.vm.box = "ratchetcc/delphix"
 
   # size of the box
   config.vm.provider :virtualbox do |vb|
@@ -44,32 +44,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # rebuild the /etc/hosts file ...
   config.vm.provision "shell", inline: "sudo rm /etc/hosts"
-  #config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost' >> /etc/hosts"
-  #config.vm.provision "shell", inline: "sudo echo '::1 localhost' >> /etc/hosts"
 
   # add the IP of the Delphix Engine etc. to each machine's /etc/hosts
   config.vm.provision "shell", inline: "sudo echo '#{DELPHIX_ENGINE_IP} de.delphix.local' >> /etc/hosts"
   config.vm.provision "shell", inline: "sudo echo '#{IP_BASE}.200 source.delphix.local' >> /etc/hosts"
   config.vm.provision "shell", inline: "sudo echo '#{IP_BASE}.210 target.delphix.local' >> /etc/hosts"
-
-  # add the delphix user
-  config.vm.provision "shell", path: "setup/prepare_delphix.sh"
-
-  #
-  # common provisioning tasks, used on all environments
-  #
-  config.vm.provision "shell", path: "setup/prepare_system.sh"
-
-  # add databases etc
-  config.vm.provision "shell", path: "setup/install_mysql.sh"
-  config.vm.provision "shell", path: "setup/install_postgres.sh"
-
-  # add runtimes
-  config.vm.provision "shell", path: "setup/install_openjdk.sh"
-  config.vm.provision "shell", path: "setup/install_ruby.sh"
-
-  # finalize the delphix user setup
-  config.vm.provision "shell", path: "setup/setup_delphix.sh"
 
   #config the delphix provisioner
   config.delphix.enabled = true
@@ -91,23 +70,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # add the IP of the db server ...
     config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
     config.vm.provision "shell", inline: "echo 'export MYSQL_DB_PORT=3306' >> /etc/profile"
-    config.vm.provision "shell", inline: "echo 'export PGS_DB_PORT=5432' >> /etc/profile"
 
     config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost #{node_name}' >> /etc/hosts"
     config.vm.provision "shell", inline: "sudo echo '#{public_ipv4} db.delphix.local' >> /etc/hosts"
 
     # configure MySQL & Postgres
     config.vm.provision "shell", path: "setup/setup_mysql.sh"
-    config.vm.provision "shell", path: "setup/setup_postgres.sh"
 
     # install the app
     config.vm.provision "shell", path: "setup/install_crm_mysql.sh"
-    config.vm.provision "shell", path: "setup/install_crm_postgres.sh"
     config.vm.provision "shell", path: "setup/setup_crm_mysql.sh"
-    config.vm.provision "shell", path: "setup/setup_crm_postgres.sh"
     config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
-    config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_postgres" # fix permissions
 
     # configure the environment
     node.delphix.env_name = node_name
@@ -142,21 +116,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # add the IP of the db server ...
     config.vm.provision "shell", inline: "echo 'export DB_HOST=#{public_ipv4}' >> /etc/profile"
     config.vm.provision "shell", inline: "echo 'export MYSQL_DB_PORT=5506' >> /etc/profile"
-    config.vm.provision "shell", inline: "echo 'export PGS_DB_PORT=7654' >> /etc/profile"
     config.vm.provision "shell", inline: "sudo echo '127.0.0.1 localhost #{node_name}' >> /etc/hosts"
     config.vm.provision "shell", inline: "sudo echo '#{public_ipv4} db.delphix.local' >> /etc/hosts"
 
     # configure MySQL & Postgres
     config.vm.provision "shell", path: "setup/setup_mysql.sh"
-    config.vm.provision "shell", path: "setup/setup_postgres.sh"
 
     # install the app
     config.vm.provision "shell", path: "setup/install_crm_mysql.sh"
-    config.vm.provision "shell", path: "setup/install_crm_postgres.sh"
     config.vm.provision "shell", path: "setup/setup_crm_scripts.sh"
     config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_mysql" # fix permissions
-    config.vm.provision "shell", inline: "chown -R delphix:delphix #{SETUP_HOME}/app_postgres" # fix permissions
-
+    
     # configure the environment
     node.delphix.env_name = node_name
     node.delphix.env_ip = public_ipv4
