@@ -23,6 +23,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 	# Every Vagrant environment requires a box to build off of.
 	config.vm.box = "ratchetcc/delphix"
+	
+	# provision my ssh keys in every VM
+	config.ssh.insert_key = false
+    	config.ssh.private_key_path = ["~/.ssh/id_rsa",  "~/.vagrant.d/insecure_private_key"]
+    	config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
 
 	# size of the box
 	config.vm.provider :virtualbox do |vb|
